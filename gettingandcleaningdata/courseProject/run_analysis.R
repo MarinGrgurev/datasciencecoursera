@@ -93,4 +93,4 @@ dataLmean <- dataL[, mean(value), by="measurement,activity,subject"]
 dataW <- dcast(dataLmean, subject+activity~measurement, value.var="V1")
 
 # Writing txt file as a result
-write.table(dataW, "cleaned_UCI_HAR_dataset.txt", row.name=FALSE)
+write.table(dataW, "./data/cleaned_UCI_HAR_dataset.txt", row.name=FALSE)
