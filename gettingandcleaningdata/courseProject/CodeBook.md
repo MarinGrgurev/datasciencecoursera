@@ -1,9 +1,69 @@
 # Code Book
 
 ##Study design and dataset
-More information about study design can be found in the acompanying readme file in the „UCI HAR Dataset“ folder. There complete study design as well as dataset is explained.
+The features selected for this assignment come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ in Samsung mobile devices. More information about study design can be found in the README file in the „UCI HAR Dataset“ folder. In that folder complete study design as well as dataset is explained in details so there is no much point in describing it here again. The dataset with thorough explanation can be downloaded at: "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip". 
+
+Here only the list and short preview of the whole variable have been given.
+These signals were used to estimate variables of the feature vector for each pattern ('-XYZ' is used to denote 3-axial signals in the X, Y and Z directions):
+tBodyAcc-XYZ
+tGravityAcc-XYZ
+tBodyAccJerk-XYZ
+tBodyGyro-XYZ
+tBodyGyroJerk-XYZ
+tBodyAccMag
+tGravityAccMag
+tBodyAccJerkMag
+tBodyGyroMag
+tBodyGyroJerkMag
+fBodyAcc-XYZ
+fBodyAccJerk-XYZ
+fBodyGyro-XYZ
+fBodyAccMag
+fBodyAccJerkMag
+fBodyGyroMag
+fBodyGyroJerkMag
+
+These signals were used to estimate variables of the feature vector for each pattern ('-XYZ' is used to denote 3-axial signals in the X, Y and Z directions):
+mean(): Mean value
+std(): Standard deviation
+mad(): Median absolute deviation 
+max(): Largest value in array
+min(): Smallest value in array
+sma(): Signal magnitude area
+energy(): Energy measure. Sum of the squares divided by the number of values. 
+iqr(): Interquartile range 
+entropy(): Signal entropy
+arCoeff(): Autorregresion coefficients with Burg order equal to 4
+correlation(): correlation coefficient between two signals
+maxInds(): index of the frequency component with largest magnitude
+meanFreq(): Weighted average of the frequency components to obtain a mean frequency
+skewness(): skewness of the frequency domain signal 
+kurtosis(): kurtosis of the frequency domain signal 
+bandsEnergy(): Energy of a frequency interval within the 64 bins of the FFT of each window.
+angle(): Angle between to vectors.
+
+Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable:
+gravityMean
+tBodyAccMean
+tBodyAccJerkMean
+tBodyGyroMean
+tBodyGyroJerkMean
 
 ##Variables name and type used in creating final tidy dataset
+Here are the list of variables extracted from the raw dataset used in a creation of tidy dataset. From 561 variables only 66 have been extracted. According to the requirements only the measurements on the mean and standard deviation for each measurement have been extracted.
+Note: This doesn't include all the columns that have "mean" or "std" word in column name but mean and standard deviation only as a measurement.
+Example: fBodyGyro-mean()-Y is mean of the fBodyGyro variable and its column is extracted, but fBodyGyro-meanFreq()-Y is mean frequency of the fBodyGyro and thus not extracted.
+
+For each record the following is provided:
+*Triaxial acceleration from the accelerometer (total acceleration) and the estimated body acceleration.
+*Triaxial Angular velocity from the gyroscope. 
+*A 561-feature vector with time and frequency domain variables. 
+*Its activity label. 
+*An identifier of the subject who carried out the experiment.
+
+List of variables used in a creation of tidy dataset:
+
+Variable name                   Variable type
 subject                     	Factor with levels "1:30"
 activity                    	Factor with levels "WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING"
 set                         	Factor with levels "test, train"
@@ -74,19 +134,8 @@ FreqBodyBodyGyroMag_std     	numeric
 FreqBodyBodyGyroJerkMag_mean	numeric
 FreqBodyBodyGyroJerkMag_std 	numeric
 
-##Script logic
-###Creating merged dataset
-First, merged dataset is created. For this part data.table package is used because all operations and calculations on data are faster than usual R dataframe and read.table() command. Although not displayed in this readme, system.time() function continuously gave faster results with fread() function than with read.table() and that is the reason I opted for this approach. Additional factor variable "set" is also created in merged dataset to be able to distinguish between train and test set in later analyses (if needed).
+##Naming variables
+Minimal adjustments of original dataset variables have been made as original ones are already very readble and concise enough. Thus only part of the variable names where measurement have been defined was separated from the rest of the name with underscore. The rest of the names stayed as cammel case. Two minor adjustments have been made: Replacing "t" and "f" with "Time" and "Freq" respectively and removing those strange parenthesis for every single variable.
 
-###Extracting the mean and standard deviation measurements
-Extracting only the measurements on the mean and standard deviation for each measurement doesn't include all the columns that have "mean" or "std" word in column name but rather looks for mean and standard deviation as a measurement. Example: fBodyGyro-mean()-Y is mean of the fBodyGyro variable and its column is extracted, but fBodyGyro-meanFreq()-Y is mean frequency of the fBodyGyro variable and not mean measurement of fBodyGyro variable and thus it is not extracted for further analysis.
 
-###Adjusting the names of the variables and use descriptive activity names to name the activities in the dataset
-Minimal adjusting of original dataset variables is perforemed as original ones are already very readble and concise. Explained in more details in Code book. Activities are converted to factors and used to name the activities in the dataset.
-
-### Creating a second tidy data set with the average of each variable for each activity and each subject.
-For this part first long dataset is created with the help of melt() function reshape2 package to prepare dataframe to be able to easily calculate mean for each variable. After that mean for each variable by subject and by activity is created. Finally, wide dataset is created with each variable in its own column for each subject and activity and cleaned dataset is written to file "cleaned_UCI_HAR_dataset.txt".
-    
-##Cleaned Data
-The resulting tidy and cleaned dataset is saved in working directory in: "data/cleaned_UCI_HAR_dataset.txt". As required from the assignment it contains independent tidy dataset with the average of each variable for each activity and each subject.
 

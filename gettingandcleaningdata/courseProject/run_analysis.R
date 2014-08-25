@@ -49,7 +49,8 @@ data <- rbindlist(list(dataTrain,dataTest))
 # Note: This doesn't include all the columns that have "mean" or "std" word in column name
 # but looks for mean and std as a measurement.
 # Example: fBodyGyro-mean()-Y is mean of the fBodyGyro variable and its column is extracted,
-# but fBodyGyro-meanFreq()-Y is mean frequency of the fBodyGyro and thus not extracted  
+# but fBodyGyro-meanFreq()-Y is weighted average of the frequency components to obtain a 
+# mean frequency of the fBodyGyro and thus not extracted  
 data <- data[, c(1:3, grep("mean\\(|std", colnames(data))), with=FALSE]
 
 ## Minimal adjusting of original dataset variables as original ones are already very 
